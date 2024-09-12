@@ -823,10 +823,35 @@ class _Auth3CreateWidgetState extends State<Auth3CreateWidget>
                                                         .text),
                                                     accountNumber: '0.00',
                                                     photoUrl:
-                                                        'https://i.pinimg.com/564x/0f/a5/15/0fa5157777b7ccaf2fc60ddaefe53cae.jpg',
+                                                        'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/projects/k-movie-t0cd8h/assets/tu86otlmrkft/Screenshot_from_2024-09-13_00-13-36.png',
                                                   ));
 
-                                              context.goNamedAuth('HomeWallet',
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(
+                                                SnackBar(
+                                                  content: Text(
+                                                    'Account created successfully',
+                                                    style: TextStyle(
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .primaryText,
+                                                    ),
+                                                  ),
+                                                  duration: const Duration(
+                                                      milliseconds: 4000),
+                                                  backgroundColor:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .secondary,
+                                                ),
+                                              );
+                                              await Future.delayed(
+                                                  const Duration(
+                                                      milliseconds: 1000));
+
+                                              context.pushNamedAuth(
+                                                  'HomeWallet',
                                                   context.mounted);
                                             },
                                             text: 'Create Account',

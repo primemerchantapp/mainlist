@@ -143,7 +143,10 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                           const Duration(milliseconds: 500),
                                       fadeOutDuration:
                                           const Duration(milliseconds: 500),
-                                      imageUrl: currentUserPhoto,
+                                      imageUrl: valueOrDefault<String>(
+                                        currentUserPhoto,
+                                        'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/projects/k-movie-t0cd8h/assets/tu86otlmrkft/Screenshot_from_2024-09-13_00-13-36.png',
+                                      ),
                                       width: 60.0,
                                       height: 60.0,
                                       fit: BoxFit.cover,
