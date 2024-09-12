@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '/backend/backend.dart';
 
 import '/auth/base_auth_user_provider.dart';
 
@@ -111,7 +112,12 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           path: '/qrCode',
           builder: (context, params) => params.isEmpty
               ? const NavBarPage(initialPage: 'QrCode')
-              : const QrCodeWidget(),
+              : QrCodeWidget(
+                  scanned: params.getParam(
+                    'scanned',
+                    ParamType.String,
+                  ),
+                ),
         ),
         FFRoute(
           name: 'auth_3_Create',
@@ -173,7 +179,15 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: 'ScanQR',
           path: '/scanQR',
-          builder: (context, params) => const ScanQRWidget(),
+          asyncParams: {
+            'scanedresult': getDoc(['users'], UsersRecord.fromSnapshot),
+          },
+          builder: (context, params) => ScanQRWidget(
+            scanedresult: params.getParam(
+              'scanedresult',
+              ParamType.Document,
+            ),
+          ),
         ),
         FFRoute(
           name: 'ManuaTransfer',

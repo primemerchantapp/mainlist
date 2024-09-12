@@ -13,7 +13,12 @@ import 'scan_q_r_model.dart';
 export 'scan_q_r_model.dart';
 
 class ScanQRWidget extends StatefulWidget {
-  const ScanQRWidget({super.key});
+  const ScanQRWidget({
+    super.key,
+    required this.scanedresult,
+  });
+
+  final UsersRecord? scanedresult;
 
   @override
   State<ScanQRWidget> createState() => _ScanQRWidgetState();

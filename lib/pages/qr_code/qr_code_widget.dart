@@ -4,12 +4,19 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:barcode_widget/barcode_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'qr_code_model.dart';
 export 'qr_code_model.dart';
 
 class QrCodeWidget extends StatefulWidget {
-  const QrCodeWidget({super.key});
+  const QrCodeWidget({
+    super.key,
+    String? scanned,
+  }) : scanned = scanned ?? 'QrCode';
+
+  final String scanned;
 
   @override
   State<QrCodeWidget> createState() => _QrCodeWidgetState();
@@ -91,7 +98,40 @@ class _QrCodeWidgetState extends State<QrCodeWidget> {
                           hoverColor: Colors.transparent,
                           highlightColor: Colors.transparent,
                           onTap: () async {
-                            context.pushNamed('ScanQR');
+                            _model.scannedqrcode =
+                                await FlutterBarcodeScanner.scanBarcode(
+                              '#C62828', // scanning line color
+                              'Cancel', // cancel button text
+                              true, // whether to show the flash icon
+                              ScanMode.BARCODE,
+                            );
+
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                  'Scanning Successfull!',
+                                  style: TextStyle(
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryText,
+                                  ),
+                                ),
+                                duration: const Duration(milliseconds: 4000),
+                                backgroundColor:
+                                    FlutterFlowTheme.of(context).secondary,
+                              ),
+                            );
+
+                            context.pushNamed(
+                              'QrCode',
+                              queryParameters: {
+                                'scanned': serializeParam(
+                                  widget.scanned,
+                                  ParamType.String,
+                                ),
+                              }.withoutNulls,
+                            );
+
+                            safeSetState(() {});
                           },
                           child: Icon(
                             Icons.document_scanner,
@@ -191,54 +231,51 @@ class _QrCodeWidgetState extends State<QrCodeWidget> {
                     ),
                   ),
                 ),
-                Container(
-                  width: 300.0,
-                  height: 100.0,
-                  decoration: BoxDecoration(
-                    color: FlutterFlowTheme.of(context).secondaryBackground,
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      FFButtonWidget(
-                        onPressed: () async {
-                          context.pushNamed('ScanQR');
-                        },
-                        text: 'Scan QR Code',
-                        options: FFButtonOptions(
-                          width: 300.0,
-                          height: 55.0,
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              24.0, 0.0, 24.0, 0.0),
-                          iconPadding: const EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 0.0, 0.0),
-                          color: FlutterFlowTheme.of(context).primaryBackground,
-                          textStyle: FlutterFlowTheme.of(context)
-                              .titleSmall
-                              .override(
-                                fontFamily: FlutterFlowTheme.of(context)
-                                    .titleSmallFamily,
-                                color: FlutterFlowTheme.of(context).primaryText,
-                                letterSpacing: 0.0,
-                                useGoogleFonts: GoogleFonts.asMap().containsKey(
-                                    FlutterFlowTheme.of(context)
-                                        .titleSmallFamily),
-                              ),
-                          elevation: 8.0,
-                          borderSide: BorderSide(
+                Padding(
+                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 12.0),
+                  child: FFButtonWidget(
+                    onPressed: () async {
+                      await Clipboard.setData(
+                          ClipboardData(text: _model.scannedqrcode));
+                    },
+                    text: valueOrDefault<String>(
+                      _model.scannedqrcode,
+                      'Csnned Result here...',
+                    ),
+                    icon: const Icon(
+                      Icons.content_copy_outlined,
+                      size: 15.0,
+                    ),
+                    options: FFButtonOptions(
+                      width: 300.0,
+                      height: 55.0,
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
+                      iconPadding:
+                          const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                      color: FlutterFlowTheme.of(context).primaryBackground,
+                      textStyle: FlutterFlowTheme.of(context)
+                          .titleSmall
+                          .override(
+                            fontFamily:
+                                FlutterFlowTheme.of(context).titleSmallFamily,
                             color: FlutterFlowTheme.of(context).primaryText,
-                            width: 1.0,
+                            letterSpacing: 0.0,
+                            useGoogleFonts: GoogleFonts.asMap().containsKey(
+                                FlutterFlowTheme.of(context).titleSmallFamily),
                           ),
-                          borderRadius: BorderRadius.circular(8.0),
-                        ),
+                      elevation: 8.0,
+                      borderSide: BorderSide(
+                        color: FlutterFlowTheme.of(context).primaryText,
+                        width: 1.0,
                       ),
-                    ],
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
                   ),
                 ),
                 Container(
                   width: 300.0,
-                  height: 100.0,
+                  height: 63.0,
                   decoration: BoxDecoration(
                     color: FlutterFlowTheme.of(context).secondaryBackground,
                   ),
