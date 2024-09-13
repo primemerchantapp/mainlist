@@ -172,6 +172,7 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                                                               FlutterFlowTheme.of(
                                                                       context)
                                                                   .headlineSmallFamily,
+                                                          fontSize: 20.0,
                                                           letterSpacing: 0.0,
                                                           useGoogleFonts: GoogleFonts
                                                                   .asMap()
@@ -871,7 +872,7 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
+                padding: const EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 20.0, 0.0),
                 child: FFButtonWidget(
                   onPressed: () async {
                     await currentUserReference!.update(createUsersRecordData(
@@ -888,7 +889,7 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                   },
                   text: 'Save Changes',
                   options: FFButtonOptions(
-                    width: 342.0,
+                    width: 377.0,
                     height: 59.0,
                     padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                     iconPadding:
@@ -904,7 +905,7 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                         ),
                     elevation: 3.0,
                     borderSide: const BorderSide(
-                      color: Colors.transparent,
+                      color: Color(0x7CFFFFFF),
                       width: 1.0,
                     ),
                     borderRadius: BorderRadius.circular(12.0),
